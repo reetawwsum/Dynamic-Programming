@@ -1,0 +1,53 @@
+Coin Change
+
+Input: A value N, and infinite supply of C coins. C = {C1, C2 ... Cm}
+=====
+
+Output: Ways we can make the change for N using C.
+======
+
+For e.g
+=======
+Input: N = 4 and C = {1,2,3}
+
+Output: {1,1,1,1},{1,1,2},{2,2},{1,3} or 4
+
+Optimal Substructure
+====================
+
+Let S = ways to make the change for N using C.
+Let Cm = last coin in C.
+
+Then, S can be divided into two sets.
+Set 1: Solutions that do not contain Cm.
+Set 2: Solutions that contain at least one Cm.
+
+Optimal Solution to the problem is sum of Set 1 and Set 2.
+
+Recursive Solution
+==================
+
+Let S(i, j) = number of ways such that
+			   1. has total value i.
+			   2. uses only the first j coins.
+
+for i <- 1 to n and any j
+	S(i, j) = S(i, j-1) 	//Set 1
+				 + 
+			  S(i-Cj, j)	//Set 2
+
+Note: if Cj > i, must have S(i, j) = S(i, j-1)
+
+Bottom-Up Algorithm
+===================
+
+Let s = 2D array, and c is an array of coins c[1..m]
+1. s[i, 0] = 0 for i <- 0 to n 		//Base Case
+2. s[0, j] = 1 for j <- 0 to m 		//Base Case
+3. for i <- 1 to n
+4. 		do for j <- 1 to m
+5. 				do if i-cj >= 0
+6.						then s[i, j] = s[i, j-1] + s[i-cj, j]
+7.				   else
+8.						then s[i, j] = s[i, j-1]
+9. return s[n, m]

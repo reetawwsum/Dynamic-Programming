@@ -1,8 +1,7 @@
 #include <stdio.h>
 #define n 9
 
-int main(void)
-{
+int main(void){
 	int i, j, max;
 
 	//Input

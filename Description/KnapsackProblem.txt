@@ -1,0 +1,61 @@
+The Knapsack Problem
+
+Input: n items. Each has a - value vi (non-negative)
+=====  					   - size/weight wi (non-negative and intergral)
+						   - capacity W (a non-negative integer)
+
+Output: subset of items (S) that - maximizes sum of values in S
+======						     - Sum of all sizes/weights in S <= W
+
+For e.g
+=======
+Input:			v = [3, 2, 4, 4]	or		W = 6
+				w = [4, 3, 2, 3]			v1 = 3	w1 = 4
+				W = 6						v2 = 2	w2 = 3
+											v3 = 4 	w3 = 2
+											v4 = 4	w4 = 3
+
+Output:			[v3, v4]			or 		8
+
+Optimal Substructure
+====================
+
+Let S = max value solution to an instance of knacksack.
+Let n = last item in input items.
+
+Case 1: Suppose item n doesn't belongs to S.
+		Then, S must be optimal solution with first (n-1) items having capacity W.
+
+Case 2: Suppose item n belongs to S.
+		Then, S-{n} must be optimal solution with first (n-1) items having capacity W-wn.
+
+Optimal Solution to the problem is maximum of Case 1 or Case 2.
+
+Recursive Solution
+==================
+
+Let V(i, x) = value of the best solution that
+			  1. uses only the first i items.
+			  2. has total size/weight <= x
+
+for i <- 1 to n and any x
+	V(i, x) = max { V(i-1, x)			//Case 1
+					V(i-1, x-wi) + vi	//Case 1
+				}
+
+Note: if wi > x, must have V(i, x) = V(i-1, x)
+
+Bottom-Up Algorithm
+===================
+
+Items are from  i <- 1 to n.
+Capacity varies x <- 0 to W.
+Let a = 2D array, v is an array of values of items. v[1..n], w is an array of size/weight of items. w[1..n].
+1. a[0, x] = 0 for x <- 0 to w 			//Base Case
+2. for i <- 1 to n
+3. 		do for x <- 0 to w
+4.			do if x-w[i] < 0
+5. 					then a[i, x] = a[i-1, x]
+6.				else
+7.					then a[i, x] = max(a[i-1, x], a[i-1, x-w[i]] + v[i])
+8. return a[n, w]

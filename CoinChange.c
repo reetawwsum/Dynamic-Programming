@@ -1,8 +1,7 @@
 #include <stdio.h>
 #define m 4
 
-int main(void)
-{
+int main(void){
 	int i, j, x, y;
 
 	//Input

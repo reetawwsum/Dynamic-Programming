@@ -6,8 +6,7 @@ int max(int a, int b){
 	return a > b ? a : b;
 }
 
-int main(void)
-{
+int main(void){
 	int i, j;
 
 	//Input

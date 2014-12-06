@@ -1,0 +1,59 @@
+Longest Comman Subsequence
+
+Input: two sequences X = x1...xm, Y = y1...yn
+=====
+
+Output: Longest comman subsequence(LCS) present in both of them. A subsequence is a sequence that appears in the same ======  relative order, but not necessary contiguous.
+
+For e.g
+=======
+Input: X = ABBCDGH		Y = AEDFHR
+
+Output:     ADH 	or 	3
+
+Optimal Substructure
+====================
+
+Let S be LCS of X & Y.
+Let sk = last alphabet of S.
+Let xm = last alphabet of X.
+Let yn = last alphabet of Y.
+Let X' = X with xm deleted.
+Let Y' = Y with yn deleted.
+
+Case 1: xm = yn
+		Then, sk = xm = yn.
+		Hence, S-{sk} is LCS of X' & Y'.
+
+Case 2: xm != yn and sk != xm
+		Then, S is LCS of X' & Y.
+
+Case 3: xm != yn and sk != yn
+		Then, S is LCS of X & Y'.
+
+Optimal Solution of the problem is either Case 1 or maximum of Case 2 or Case 3.
+
+Recursive Solution
+==================
+
+Consider Xi = 1st i letters of X, Yj = 1st j letter of Y.
+Consider l(i, j) is LCS of sequence Xi & Yj.
+for all i <- 1 to m and j <- 1 to n
+	l(i, j) = l(i-1, j-1) + 1 	if xi=yj 	//Case 1
+			  max { l(i-1, j)	otherwise	//Case 2
+			  		l(i, j-1)				//Case 3
+			  }
+
+Bottom-Up Algorithm
+===================
+
+Let l = 2D array.
+1. l[i, 0] = 0 for all i <- 0 to m.
+2. l[0, j] = 0 for all j <- 0 to n.
+3. for i <- 1 to m
+4. 		do for j <- 1 to n
+5. 				do if x[i] = y[j]
+6. 						then l[i, j] = 1 + l[i-1, j-1]
+7.					else
+8.						then max(l[i-1, j], l[i, j-1])
+9. return l[m, n]

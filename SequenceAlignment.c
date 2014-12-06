@@ -34,8 +34,7 @@ int mappingPenalty(char a, char b){
 	return penalty[i][j];
 }
 
-int main(void)
-{
+int main(void){
 	int i, j;
 
 	//Input Data

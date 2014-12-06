@@ -5,8 +5,7 @@ int max(int a, int b){
 	return a > b ? a : b;
 }
 
-int main(void)
-{
+int main(void){
 	int i;
 	//Path Graph
 	int g[n+1] = {0, 1, 4, 5, 4, 5, 8, 1, 8, 9, 2};

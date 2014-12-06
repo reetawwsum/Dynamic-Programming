@@ -1,0 +1,48 @@
+Maximum Weight Independent Set Path Graph (Max WIS in Path Graphs)
+
+Input: a path graph G=(V, E) with non- negative weights on vertices. or g[1..n]
+=====
+
+Output: subset of non-adjacent vertices (independent set) of maximum total weight. or Max WIS
+======
+
+For e.g
+=======
+Input:	 		o--------o-------o--------o			or [1, 4, 5, 4]
+				1		 4		 5	      4
+
+Output: 		[4, 4]								or 8
+
+Optimal Substructure
+====================
+
+Let S be a subset of V be a max WIS.
+Let Vn = last vertex of input graph.
+
+Case 1: Suppose Vn doesn't belongs to S.
+		Let G' = G with Vn deleted.
+		Then, S is max WIS of G'
+
+Case 2: Suppose Vn belongs to S.
+		Let G'' = G with Vn, Vn-1 deleted.
+		Then, S-{Vn} is max WIS of G''
+
+Optimal Solution of the problem is maximum of Case 1 or Case 2.
+
+Recursive Solution
+==================
+
+Let A(i) = max WIS of Gi.
+Then,
+	A(i) = max { A(i-1) 		// Case 1 
+				 A(i-2) + wi 	// Case 2
+			}
+
+Bottom-Up Algorithm
+===================
+
+Let a = 1D array and g is an array of input graph. g[1..n]
+1. a[0] = 0, a[1] = g[1]		//Base Case
+2. for i <- 2 to n
+3. 		do a[i] = max(a[i-1], a[i-2] + g[i])
+4. return a[n]

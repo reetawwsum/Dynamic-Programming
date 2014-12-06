@@ -1,0 +1,54 @@
+Sequence Alignment
+
+Input: two strings X = x1...xm, Y = y1...yn over the alphabets {A, C, G, T} with
+=====			 - gapPenalty >= 0 for inserting a gap.
+				 - mappingPenalty >= 0 for mismatching two alphabets.
+
+Output: alignment of the strings that minimizes the total penalty. or Min Alignment Penalty.
+======
+
+Optimal Substructure
+====================
+
+Consider an optimal alignment of X & Y.
+
+		--------------X+gaps--------------
+		--------------Y+gaps--------------
+
+Let xm = last alphabet of X.
+Let yn = last alphabet of Y.
+Let X' = X-xm, Y' = Y-yn
+
+Case 1: xm is matched with yn.
+		Then, induced alignment of X' & Y' is optimal.
+
+Case 2: xm matched with gap.
+		Then, induced alignment of X' & Y is optimal.
+
+Case 3: yn matched with gap.
+		Then, induced alignment of X & Y' is optimal.
+
+Optimal Solution of problem is minimum of Case 1, Case 2, or Case 3.
+
+Recursive Solution
+==================
+
+Consider Xi = 1st i letters of X, Yj = 1st j letter of Y.
+Consider Pij = Penalty of optimal alignment of Xi & Yj.
+for all i <- 1 to m and j <- 1 to n
+	Pij = min { mappingPenalty(i, j) + P(i-1, j-1)	//Case 1
+				gapPenalty + P(i-1, j)				//Case 2
+				gapPenalty + P(i, j-1)				//Case 3
+			}
+
+Bottom-Up Algorithm
+===================
+
+Let p = 2D array.
+1. p[i, 0] = p[0, i] = i*gapPenalty.
+2. for i <- 1 to m
+3. 		do for j <- 1 to n
+4. 			do p[i, j] = min(p[i-1, j-1] + mappingPenalty(x[i], y[j]),
+							p[i-1, j] + gapPenalty,
+							p[i, j-1] + gapPenalty )
+5. return p[m, n]
