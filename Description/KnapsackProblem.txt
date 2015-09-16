@@ -40,7 +40,7 @@ Let V(i, x) = value of the best solution that
 
 for i <- 1 to n and any x
 	V(i, x) = max { V(i-1, x)			//Case 1
-					V(i-1, x-wi) + vi	//Case 1
+					V(i-1, x-wi) + vi	//Case 2
 				}
 
 Note: if wi > x, must have V(i, x) = V(i-1, x)
